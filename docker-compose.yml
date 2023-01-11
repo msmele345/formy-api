@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  docker-mysql:
+    container_name: docker-mysql-meals
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=meals
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass1
+
+#  mongodb-1:
+#    depends_on:
+#      - docker-mysql
+#    image: mongo
+#    container_name: mongodb-1
+#    restart: always
+#    volumes:
+#      - ./mongo-seed:/mongo-seed
+#      command:
+#        /mongo-seed/import.sh
+#    ports:
+#      - 27017:27017
+## OR, copy stocks.json into container manually and run script from import.json: docker cp foo.txt mycontainer:/foo.txt
